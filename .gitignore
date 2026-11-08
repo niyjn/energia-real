@@ -1,0 +1,18 @@
+# variáveis de ambiente e credenciais
+.env
+.env.*
+
+# cache e bytecode python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# ambientes virtuais
+.venv/
+venv/
+env/
+
+# saídas temporárias do motor sabidez
+saida/
+*.png
