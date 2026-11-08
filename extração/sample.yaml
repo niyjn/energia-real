@@ -1,0 +1,20 @@
+# receita refatorada para testar a ação get_json na api ckan da ccee
+driver: auto              # auto | selenium | playwright
+browser: auto             # auto | firefox | edge | chrome
+headless: true
+steps:
+  - get_json:
+      url: https://dadosabertos.ccee.org.br/api/3/action/package_show
+      params:
+        id: pld_horario
+      as: pacote_pld
+      save: package_show_pld.json
+  - get_json:
+      url: https://dadosabertos.ccee.org.br/api/3/action/datastore_search
+      params:
+        resource_id: 2a180a6b-f092-43eb-9f82-a48798b803dc
+        limit: 5
+        offset: 0
+        sort: "_id asc"
+      as: amostra_2025
+      save: amostra_2025.json
