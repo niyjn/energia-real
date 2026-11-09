@@ -1,0 +1,70 @@
+relationship fato_geracao_dim_tempo_sk_tempo
+	fromColumn: fato_geracao.sk_tempo
+	toColumn: dim_tempo.sk_tempo
+
+relationship fato_geracao_dim_usina_sk_usina
+	fromColumn: fato_geracao.sk_usina
+	toColumn: dim_usina.sk_usina
+
+relationship fato_geracao_dim_fonte_sk_fonte
+	fromColumn: fato_geracao.sk_fonte
+	toColumn: dim_fonte.sk_fonte
+
+relationship fato_geracao_dim_submercado_sk_submercado
+	fromColumn: fato_geracao.sk_submercado
+	toColumn: dim_submercado.sk_submercado
+
+relationship fato_pld_dim_tempo_sk_tempo
+	fromColumn: fato_pld.sk_tempo
+	toColumn: dim_tempo.sk_tempo
+
+relationship fato_pld_dim_submercado_sk_submercado
+	fromColumn: fato_pld.sk_submercado
+	toColumn: dim_submercado.sk_submercado
+
+relationship fato_parada_hora_dim_tempo_sk_tempo
+	fromColumn: fato_parada_hora.sk_tempo
+	toColumn: dim_tempo.sk_tempo
+
+relationship fato_parada_hora_dim_usina_sk_usina
+	fromColumn: fato_parada_hora.sk_usina
+	toColumn: dim_usina.sk_usina
+
+relationship fato_parada_hora_dim_fonte_sk_fonte
+	fromColumn: fato_parada_hora.sk_fonte
+	toColumn: dim_fonte.sk_fonte
+
+relationship fato_parada_hora_dim_submercado_sk_submercado
+	fromColumn: fato_parada_hora.sk_submercado
+	toColumn: dim_submercado.sk_submercado
+
+relationship 9dbdce32-3f15-4c03-821a-2d99a949ebd7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_tempo.data_hora
+	toColumn: LocalDateTable_8ec13993-6871-42ca-9467-3146e608cf99.Date
+
+relationship 8d436e1d-c2c8-49b3-9179-c4a112ad52a1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_tempo.data
+	toColumn: LocalDateTable_b6792efb-a20c-47cf-aafe-08a2239119a9.Date
+
+relationship 7b4cf76b-5edf-434e-b46d-7234923714b8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_usina.data_inicio_operacao
+	toColumn: LocalDateTable_c49d65f8-789c-41f7-a3bb-6c85a270e41d.Date
+
+relationship baabb083-00e0-47ca-8e7a-22233454be64
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_usina.valido_de
+	toColumn: LocalDateTable_0b2e790d-0c51-4599-bd88-5dea116a8460.Date
+
+relationship 00815e42-ac4d-44ab-a68a-c25e7de0d768
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_usina.valido_ate
+	toColumn: LocalDateTable_85db88a8-facb-4564-9115-148dd680d8a3.Date
+
+relationship a7dea5fd-ed18-4547-b469-db4042eb96c9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fato_qualidade.executado_em
+	toColumn: LocalDateTable_08560899-97cf-46f7-ae98-b4d37fed87d9.Date
+

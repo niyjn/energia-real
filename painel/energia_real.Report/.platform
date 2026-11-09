@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "energia_real"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "927154a0-cdbd-4dcd-873e-99097f3546ec"
+  }
+}

@@ -66,7 +66,7 @@ Para recriar o DW do zero: `python dw/carregar_dw.py --recriar`.
 | Receita valorada ao PLD | R$ 638,2 milhões |
 | Preço capturado médio | R$ 204,45/MWh |
 | Melhor captura | Térmica a gás (razão 1,25: despacha no horário de ponta) |
-| Pior captura | Solar (razão 0,78: gera ao meio-dia, quando o PLD é baixo) |
+| Pior captura | Solar (razão 0,77: gera ao meio-dia, quando o PLD é baixo) |
 | Efeito da limpeza na receita | −R$ 165,7 milhões (−20,6%), quase todo de um dia digitado em kWh |
 
 Detalhes: [docs/relatorio_qualidade.md](docs/relatorio_qualidade.md) e [docs/modelagem.md](docs/modelagem.md).

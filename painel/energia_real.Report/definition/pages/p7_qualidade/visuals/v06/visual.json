@@ -1,0 +1,144 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v06",
+  "position": {
+    "x": 20,
+    "y": 150,
+    "z": 6,
+    "height": 550,
+    "width": 1240,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fato_qualidade"
+                    }
+                  },
+                  "Property": "fase"
+                }
+              },
+              "queryRef": "fato_qualidade.fase",
+              "nativeQueryRef": "fase"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fato_qualidade"
+                    }
+                  },
+                  "Property": "dimensao"
+                }
+              },
+              "queryRef": "fato_qualidade.dimensao",
+              "nativeQueryRef": "dimensao"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fato_qualidade"
+                    }
+                  },
+                  "Property": "tabela"
+                }
+              },
+              "queryRef": "fato_qualidade.tabela",
+              "nativeQueryRef": "tabela"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fato_qualidade"
+                    }
+                  },
+                  "Property": "regra"
+                }
+              },
+              "queryRef": "fato_qualidade.regra",
+              "nativeQueryRef": "regra"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fato_qualidade"
+                    }
+                  },
+                  "Property": "avaliados"
+                }
+              },
+              "queryRef": "fato_qualidade.avaliados",
+              "nativeQueryRef": "avaliados"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fato_qualidade"
+                    }
+                  },
+                  "Property": "falhas"
+                }
+              },
+              "queryRef": "fato_qualidade.falhas",
+              "nativeQueryRef": "falhas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fato_qualidade"
+                    }
+                  },
+                  "Property": "pct_conformidade"
+                }
+              },
+              "queryRef": "fato_qualidade.pct_conformidade",
+              "nativeQueryRef": "pct_conformidade"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Regras de qualidade: registros avaliados, falhas e conformidade'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

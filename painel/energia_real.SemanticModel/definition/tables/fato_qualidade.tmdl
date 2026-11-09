@@ -1,0 +1,88 @@
+table fato_qualidade
+	lineageTag: c22b1486-ea10-4cd5-9d67-e4f71ea7dbea
+
+	column id_execucao
+		dataType: int64
+		lineageTag: 914a040a-9943-44ee-806d-a5d02886d140
+		summarizeBy: sum
+		sourceColumn: id_execucao
+
+		annotation SummarizationSetBy = Automatic
+
+	column executado_em
+		dataType: dateTime
+		formatString: dd/mm/yyyy hh:nn
+		lineageTag: cf43f77a-8da2-4a19-93e6-21c67eca0904
+		summarizeBy: none
+		sourceColumn: executado_em
+
+		variation Variação
+			isDefault
+			relationship: a7dea5fd-ed18-4547-b469-db4042eb96c9
+			defaultHierarchy: LocalDateTable_08560899-97cf-46f7-ae98-b4d37fed87d9.'Date Hierarchy'
+
+	column fase
+		dataType: string
+		lineageTag: f49818f1-04e9-41aa-9c87-9e653071aad1
+		summarizeBy: none
+		sourceColumn: fase
+
+	column regra
+		dataType: string
+		lineageTag: 5521dbe3-e620-40f9-a694-8a57e3570acf
+		summarizeBy: none
+		sourceColumn: regra
+
+	column dimensao
+		dataType: string
+		lineageTag: 96276b4f-319f-4d72-a0e0-49fc178c3bf2
+		summarizeBy: none
+		sourceColumn: dimensao
+
+	column tabela
+		dataType: string
+		lineageTag: 43dff7cd-383b-4dad-a411-a074038970cc
+		summarizeBy: none
+		sourceColumn: tabela
+
+	column descricao
+		dataType: string
+		lineageTag: 6d4d89d8-35c0-4fd8-825c-96a50adbf497
+		summarizeBy: none
+		sourceColumn: descricao
+
+	column avaliados
+		dataType: int64
+		lineageTag: ca125818-a982-483c-b7cf-3f7739591e1a
+		summarizeBy: sum
+		sourceColumn: avaliados
+
+		annotation SummarizationSetBy = Automatic
+
+	column falhas
+		dataType: int64
+		lineageTag: 4b3051e3-fd8c-43a8-b99c-9dd63ac5836c
+		summarizeBy: sum
+		sourceColumn: falhas
+
+		annotation SummarizationSetBy = Automatic
+
+	column pct_conformidade
+		dataType: double
+		lineageTag: 12fcc277-8b37-4f0d-8cc9-2b2a4c6a192b
+		summarizeBy: sum
+		sourceColumn: pct_conformidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fato_qualidade = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="fato_qualidade"]}[Data]
+				in
+					Tabela
+

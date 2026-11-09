@@ -16,3 +16,6 @@ env/
 # saídas temporárias do motor sabidez
 saida/
 *.png
+
+# apresentação (não versionada)
+apresentacao/

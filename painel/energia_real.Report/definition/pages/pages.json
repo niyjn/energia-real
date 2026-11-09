@@ -1,0 +1,14 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
+  "pageOrder": [
+    "p1_pergunta",
+    "p2_geracao",
+    "p3_captura",
+    "p4_pld",
+    "p5_paradas",
+    "p6_clima",
+    "p7_qualidade",
+    "p8_recomendacao"
+  ],
+  "activePageName": "p4_pld"
+}

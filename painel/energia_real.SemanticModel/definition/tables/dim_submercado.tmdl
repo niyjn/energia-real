@@ -1,0 +1,37 @@
+table dim_submercado
+	lineageTag: a926bf3f-c822-4a11-a9b9-23022b8e866c
+
+	column sk_submercado
+		dataType: int64
+		isHidden
+		lineageTag: 5e2203e8-1444-41a4-8325-2088636b93ce
+		summarizeBy: none
+		sourceColumn: sk_submercado
+
+	column cod_submercado
+		dataType: string
+		lineageTag: f545a705-2384-4bdd-a780-a125cf096f1e
+		summarizeBy: none
+		sourceColumn: cod_submercado
+
+	column nome
+		dataType: string
+		lineageTag: 3266f8ef-f61a-4fb0-b907-25a8d21c8768
+		summarizeBy: none
+		sourceColumn: nome
+
+	column regioes
+		dataType: string
+		lineageTag: 75001c54-e7be-48b8-a403-435ac63fa076
+		summarizeBy: none
+		sourceColumn: regioes
+
+	partition dim_submercado = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="dim_submercado"]}[Data]
+				in
+					Tabela
+

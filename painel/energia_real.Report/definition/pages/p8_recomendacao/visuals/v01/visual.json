@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v01",
+  "position": {
+    "x": 40,
+    "y": 40,
+    "z": 1,
+    "height": 560,
+    "width": 1200,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Recomendações"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "1. A solar captura o pior preço (gera ao meio-dia, quando o PLD é baixo): priorizar contratos/hedge para ela e avaliar armazenamento para deslocar energia para 18h-21h."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "2. O PLD é mais alto de agosto a dezembro e entre 18h e 21h: programar manutenções fora desse período."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "3. A térmica a gás captura o melhor preço porque despacha na ponta: manter flexibilidade para esse horário."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "4. Os maiores erros de dado vieram de lançamentos manuais (unidade errada, duplicidade): validar unidade, faixa e duplicidade na entrada."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

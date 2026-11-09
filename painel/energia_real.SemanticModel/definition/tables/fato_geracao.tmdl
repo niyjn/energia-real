@@ -1,0 +1,162 @@
+table fato_geracao
+	lineageTag: d27b9f33-9cdb-4ac8-845e-2b73a00c4320
+
+	column sk_tempo
+		dataType: int64
+		isHidden
+		lineageTag: 524da5eb-ace4-47b5-90ea-6ad65e0ffa02
+		summarizeBy: none
+		sourceColumn: sk_tempo
+
+	column sk_usina
+		dataType: int64
+		isHidden
+		lineageTag: 14b392ea-ca77-4b2c-9daa-ef93eb377c3c
+		summarizeBy: none
+		sourceColumn: sk_usina
+
+	column sk_fonte
+		dataType: int64
+		isHidden
+		lineageTag: 753e7c36-c177-45b0-aa28-a105940e5519
+		summarizeBy: none
+		sourceColumn: sk_fonte
+
+	column sk_submercado
+		dataType: int64
+		isHidden
+		lineageTag: 9886d814-e2a9-436d-b11b-73d6f0c34af5
+		summarizeBy: none
+		sourceColumn: sk_submercado
+
+	column energia_mwh
+		dataType: double
+		lineageTag: a3a3f59e-5ca8-4661-b5ec-5ebd7cea0e61
+		summarizeBy: sum
+		sourceColumn: energia_mwh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column disponibilidade_mw
+		dataType: double
+		lineageTag: e989deb0-84a9-4f25-861a-95f4ea5bb6a2
+		summarizeBy: sum
+		sourceColumn: disponibilidade_mw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column potencia_mw
+		dataType: double
+		lineageTag: eeaf955b-71a4-4940-b74d-31fe3844f8d0
+		summarizeBy: sum
+		sourceColumn: potencia_mw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pld
+		dataType: double
+		lineageTag: f4d5509d-3fc8-4f8b-8d4f-fce42c6093e5
+		summarizeBy: sum
+		sourceColumn: pld
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column receita_pld
+		dataType: double
+		lineageTag: e23a9608-6614-46fe-89e0-c7c0a01b4ad4
+		summarizeBy: sum
+		sourceColumn: receita_pld
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column em_parada
+		dataType: boolean
+		lineageTag: a1497845-8e2a-4182-8f58-1cb128bff49b
+		summarizeBy: none
+		sourceColumn: em_parada
+
+	column status_qualidade
+		dataType: string
+		lineageTag: 94907a05-c558-44b3-a905-8ac98610b9ef
+		summarizeBy: none
+		sourceColumn: status_qualidade
+
+	column radiacao_wm2
+		dataType: double
+		lineageTag: 96f4457a-0d8d-42c4-8120-01d9fba25204
+		summarizeBy: sum
+		sourceColumn: radiacao_wm2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vento_10m_ms
+		dataType: double
+		lineageTag: 07ac547a-c589-4627-bca6-717dd88e0109
+		summarizeBy: sum
+		sourceColumn: vento_10m_ms
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vento_100m_ms
+		dataType: double
+		lineageTag: 4ecc72d7-f704-4421-8020-207e520bbe29
+		summarizeBy: sum
+		sourceColumn: vento_100m_ms
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column temperatura_c
+		dataType: double
+		lineageTag: 38707373-cd93-4969-9f21-9e2d00115633
+		summarizeBy: sum
+		sourceColumn: temperatura_c
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column precipitacao_mm
+		dataType: double
+		lineageTag: b38a15dc-db42-4139-825a-2f6157a21bea
+		summarizeBy: sum
+		sourceColumn: precipitacao_mm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column nuvens_pct
+		dataType: double
+		lineageTag: d26f3b60-c177-4e74-952a-9b6a6504e0ea
+		summarizeBy: sum
+		sourceColumn: nuvens_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fato_geracao = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="fato_geracao"]}[Data]
+				in
+					Tabela
+

@@ -1,0 +1,171 @@
+table dim_tempo
+	lineageTag: 056df578-d7d2-47ac-83cc-3fc7d62d5e00
+
+	column sk_tempo
+		dataType: int64
+		isHidden
+		lineageTag: b91d9d59-80be-4ab1-b6af-b28b1cc6bf69
+		summarizeBy: none
+		sourceColumn: sk_tempo
+
+	column data_hora
+		dataType: dateTime
+		formatString: dd/mm/yyyy hh:nn
+		lineageTag: f99b1949-f1ac-4f5c-ba92-3b2bb147e220
+		summarizeBy: none
+		sourceColumn: data_hora
+
+		variation Variação
+			isDefault
+			relationship: 9dbdce32-3f15-4c03-821a-2d99a949ebd7
+			defaultHierarchy: LocalDateTable_8ec13993-6871-42ca-9467-3146e608cf99.'Date Hierarchy'
+
+	column data
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: ef8d678e-e4fb-400b-ae0a-84882e3977f4
+		summarizeBy: none
+		sourceColumn: data
+
+		variation Variação
+			isDefault
+			relationship: 8d436e1d-c2c8-49b3-9179-c4a112ad52a1
+			defaultHierarchy: LocalDateTable_b6792efb-a20c-47cf-aafe-08a2239119a9.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ano
+		dataType: int64
+		lineageTag: e8f2ebfd-1075-42fe-8ab4-c32a4345b20c
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: int64
+		lineageTag: 343424e0-472f-4a46-b705-cc30be47c8b2
+		summarizeBy: sum
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		lineageTag: ea5dad5b-60c2-4a5f-b7bd-1c808dcc7c87
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_mes
+		dataType: string
+		lineageTag: 2b4f4098-b819-4af6-82bd-c97ed4020667
+		summarizeBy: none
+		sourceColumn: nome_mes
+		sortByColumn: mes
+
+	column ano_mes
+		dataType: string
+		lineageTag: c3a35d81-7af2-40e3-870a-de04878944cf
+		summarizeBy: none
+		sourceColumn: ano_mes
+
+	column dia
+		dataType: int64
+		lineageTag: 96e6724e-a9a3-442e-9c25-d477ba222dc0
+		summarizeBy: sum
+		sourceColumn: dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: int64
+		lineageTag: 57065d50-a929-489c-b88c-06be11d37e02
+		summarizeBy: sum
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_dia_semana
+		dataType: string
+		lineageTag: e9caf2a6-06f8-43ce-ae05-02e4544ebc44
+		summarizeBy: none
+		sourceColumn: nome_dia_semana
+		sortByColumn: dia_semana
+
+	column hora
+		dataType: int64
+		lineageTag: 21d19ba1-4cd9-4d5b-9683-13c5d85aa96b
+		summarizeBy: sum
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+	column fim_de_semana
+		dataType: boolean
+		lineageTag: 639dc481-33e0-483d-8611-c067210e8f1a
+		summarizeBy: none
+		sourceColumn: fim_de_semana
+
+	column feriado
+		dataType: boolean
+		lineageTag: 5e2bf040-f98c-4248-a480-01871837303f
+		summarizeBy: none
+		sourceColumn: feriado
+
+	column ponto_facultativo
+		dataType: boolean
+		lineageTag: a4fa553c-ab92-4760-8ecc-fac1d9aa0e88
+		summarizeBy: none
+		sourceColumn: ponto_facultativo
+
+	column nome_feriado
+		dataType: string
+		lineageTag: a8256732-1955-4406-a7e1-3777a3bdc6c6
+		summarizeBy: none
+		sourceColumn: nome_feriado
+
+	column dia_util
+		dataType: boolean
+		lineageTag: 14872c90-0020-42dc-b014-3a72af53aa41
+		summarizeBy: none
+		sourceColumn: dia_util
+
+	column estacao
+		dataType: string
+		lineageTag: 8f65b628-db55-4a33-a96e-6b28cece260a
+		summarizeBy: none
+		sourceColumn: estacao
+
+	column periodo_hidrologico
+		dataType: string
+		lineageTag: 1faa06f5-4e4c-46d0-b012-36eee44e05e5
+		summarizeBy: none
+		sourceColumn: periodo_hidrologico
+
+	column patamar_carga
+		dataType: string
+		lineageTag: e2e26d72-49e1-47d9-bb5a-a259c64f4964
+		summarizeBy: none
+		sourceColumn: patamar_carga
+
+	column horario_ponta
+		dataType: boolean
+		lineageTag: b8b55f7d-ec4a-408c-a626-318b7788288d
+		summarizeBy: none
+		sourceColumn: horario_ponta
+
+	partition dim_tempo = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="dim_tempo"]}[Data]
+				in
+					Tabela
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+

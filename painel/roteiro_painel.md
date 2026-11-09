@@ -3,6 +3,15 @@
 O arquivo `.pbix` precisa ser montado no Power BI Desktop. Este roteiro cobre conexão, modelo,
 páginas e a narrativa. As medidas estão em [medidas_dax.md](medidas_dax.md).
 
+> **Atalho:** `python gerar_pbip.py` gera `energia_real.pbip` com as tabelas, relacionamentos e medidas prontos
+> (as seções 1 e 2 abaixo e o arquivo de medidas já vêm feitos). No Power BI Desktop ligue
+> *Opções → Recursos de visualização → Salvar como Projeto do Power BI (.pbip)*, abra o arquivo, preencha o parâmetro
+> **ServidorPG** (host do `DB_URL`, sem `jdbc:postgresql://` nem a porta) em *Transformar dados → Gerenciar parâmetros*,
+> informe usuário e senha do banco e clique em *Atualizar*. Depois monte os visuais das páginas (seção 3) e use
+> *Arquivo → Salvar como* `.pbix`. Este projeto foi gerado sem poder abri-lo no Power BI: se algum erro de carga aparecer,
+> a seção 2 e o `medidas_dax.md` permitem refazer o modelo à mão.
+> **Filtro de relatório:** `dim_tempo[ano] = 2025` (a geração só existe em 2025; o PLD de 2026 distorceria o PLD médio de referência).
+
 ## 1. Conexão (somente o DW)
 
 1. **Obter dados → Banco de dados PostgreSQL**. Servidor: o host do `DB_URL` do `.env`, sem `jdbc:postgresql://`

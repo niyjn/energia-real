@@ -1,0 +1,43 @@
+table dim_fonte
+	lineageTag: c42cdf09-8c82-4f1e-87eb-658cc44b22e1
+
+	column sk_fonte
+		dataType: int64
+		isHidden
+		lineageTag: d44a11b0-dcf0-4f86-af02-2c7877b6810e
+		summarizeBy: none
+		sourceColumn: sk_fonte
+
+	column cod_fonte
+		dataType: string
+		lineageTag: ef197b56-fc13-465c-a89b-078592543d9c
+		summarizeBy: none
+		sourceColumn: cod_fonte
+
+	column descricao
+		dataType: string
+		lineageTag: e644ec4b-eb64-4881-822b-6a9dfca7f7ec
+		summarizeBy: none
+		sourceColumn: descricao
+
+	column renovavel
+		dataType: boolean
+		lineageTag: 39469587-dbcd-4741-a238-a199cae80082
+		summarizeBy: none
+		sourceColumn: renovavel
+
+	column intermitente
+		dataType: boolean
+		lineageTag: 951004dc-fe52-4e51-930b-ff697837abe2
+		summarizeBy: none
+		sourceColumn: intermitente
+
+	partition dim_fonte = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="dim_fonte"]}[Data]
+				in
+					Tabela
+

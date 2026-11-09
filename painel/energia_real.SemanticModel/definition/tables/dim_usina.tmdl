@@ -1,0 +1,148 @@
+table dim_usina
+	lineageTag: e3b6dd7b-a599-419b-952a-c9fc6e4dba4b
+
+	column sk_usina
+		dataType: int64
+		isHidden
+		lineageTag: ab2f6793-de10-4533-a46f-bddf90912cb8
+		summarizeBy: none
+		sourceColumn: sk_usina
+
+	column cod_usina
+		dataType: string
+		lineageTag: 8dbe6305-bba6-452e-95f1-74ce2f353ae0
+		summarizeBy: none
+		sourceColumn: cod_usina
+
+	column nome
+		dataType: string
+		lineageTag: 925a821b-dd2f-457f-b9ba-f0a92e5e5a62
+		summarizeBy: none
+		sourceColumn: nome
+
+	column cod_fonte
+		dataType: string
+		lineageTag: d36dcbf0-c17d-4448-bde4-c95f5118cf35
+		summarizeBy: none
+		sourceColumn: cod_fonte
+
+	column cod_submercado
+		dataType: string
+		lineageTag: 05ca104e-71cd-479b-86d5-6d0f77313a86
+		summarizeBy: none
+		sourceColumn: cod_submercado
+
+	column uf
+		dataType: string
+		lineageTag: d12ee4e2-7d7f-447a-a4f5-c9d8b4452afc
+		summarizeBy: none
+		sourceColumn: uf
+
+	column municipio
+		dataType: string
+		lineageTag: 61f1391d-2856-476e-b56f-be8d21a115de
+		summarizeBy: none
+		sourceColumn: municipio
+
+	column latitude
+		dataType: double
+		lineageTag: 936ae674-d04b-4abb-92b2-61427cc07bc2
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: d8517976-4571-4ab7-9121-39d631505876
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column potencia_mw
+		dataType: double
+		lineageTag: e8264ec4-3faa-4c71-9e55-9ee967f717c3
+		summarizeBy: sum
+		sourceColumn: potencia_mw
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column data_inicio_operacao
+		dataType: dateTime
+		formatString: dd/mm/yyyy
+		lineageTag: a813dfa3-afc3-49ad-aead-64f55a67e0d7
+		summarizeBy: none
+		sourceColumn: data_inicio_operacao
+
+		variation Variação
+			isDefault
+			relationship: 7b4cf76b-5edf-434e-b46d-7234923714b8
+			defaultHierarchy: LocalDateTable_c49d65f8-789c-41f7-a3bb-6c85a270e41d.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column situacao
+		dataType: string
+		lineageTag: 32d99b53-dcd2-438a-bae8-67654d2b0be2
+		summarizeBy: none
+		sourceColumn: situacao
+
+	column flag_qualidade
+		dataType: string
+		lineageTag: 15fbc68b-9c9f-43ea-8991-39173c56c6ad
+		summarizeBy: none
+		sourceColumn: flag_qualidade
+
+	column hash_scd2
+		dataType: string
+		isHidden
+		lineageTag: ba7983a9-ce45-4910-beeb-b32b2a162b0f
+		summarizeBy: none
+		sourceColumn: hash_scd2
+
+	column valido_de
+		dataType: dateTime
+		formatString: dd/mm/yyyy hh:nn
+		lineageTag: f3522f42-772c-4ab9-88ca-3b88973d2bbb
+		summarizeBy: none
+		sourceColumn: valido_de
+
+		variation Variação
+			isDefault
+			relationship: baabb083-00e0-47ca-8e7a-22233454be64
+			defaultHierarchy: LocalDateTable_0b2e790d-0c51-4599-bd88-5dea116a8460.'Date Hierarchy'
+
+	column valido_ate
+		dataType: dateTime
+		formatString: dd/mm/yyyy hh:nn
+		lineageTag: f02c3a41-4906-4c63-abac-c33a42f638d6
+		summarizeBy: none
+		sourceColumn: valido_ate
+
+		variation Variação
+			isDefault
+			relationship: 00815e42-ac4d-44ab-a68a-c25e7de0d768
+			defaultHierarchy: LocalDateTable_85db88a8-facb-4564-9115-148dd680d8a3.'Date Hierarchy'
+
+	column versao_atual
+		dataType: boolean
+		lineageTag: 6482b167-e61b-4218-a42a-8f926f74d10e
+		summarizeBy: none
+		sourceColumn: versao_atual
+
+	partition dim_usina = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="dim_usina"]}[Data]
+				in
+					Tabela
+

@@ -1,0 +1,36 @@
+table fato_pld
+	lineageTag: fb131586-08d6-4607-b43a-f3ef31f36c91
+
+	column sk_tempo
+		dataType: int64
+		isHidden
+		lineageTag: 75769d3f-053d-4d40-9c91-9dc0db6eab47
+		summarizeBy: none
+		sourceColumn: sk_tempo
+
+	column sk_submercado
+		dataType: int64
+		isHidden
+		lineageTag: 0d9d03d3-38f8-4460-a470-85c93a335ba1
+		summarizeBy: none
+		sourceColumn: sk_submercado
+
+	column pld
+		dataType: double
+		lineageTag: 1e2849b1-3d83-4965-9ab5-e4d69f18fee4
+		summarizeBy: sum
+		sourceColumn: pld
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fato_pld = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="fato_pld"]}[Data]
+				in
+					Tabela
+

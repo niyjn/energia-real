@@ -1,0 +1,32 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_tempo","dim_submercado","dim_fonte","dim_usina","fato_pld","fato_geracao","fato_parada_hora","fato_qualidade","fato_impacto","_Medidas","ServidorPG","BancoPG"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+ref table dim_tempo
+ref table dim_submercado
+ref table dim_fonte
+ref table dim_usina
+ref table fato_pld
+ref table fato_geracao
+ref table fato_parada_hora
+ref table fato_qualidade
+ref table fato_impacto
+ref table _Medidas
+ref table DateTableTemplate_9626e490-3ba2-47a1-b052-b17e794cb7e8
+ref table LocalDateTable_8ec13993-6871-42ca-9467-3146e608cf99
+ref table LocalDateTable_b6792efb-a20c-47cf-aafe-08a2239119a9
+ref table LocalDateTable_c49d65f8-789c-41f7-a3bb-6c85a270e41d
+ref table LocalDateTable_0b2e790d-0c51-4599-bd88-5dea116a8460
+ref table LocalDateTable_85db88a8-facb-4564-9115-148dd680d8a3
+ref table LocalDateTable_08560899-97cf-46f7-ae98-b4d37fed87d9
+

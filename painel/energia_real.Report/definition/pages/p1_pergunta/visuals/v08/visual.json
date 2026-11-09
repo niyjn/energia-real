@@ -1,0 +1,32 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "v08",
+  "position": {
+    "x": 20,
+    "y": 670,
+    "z": 8,
+    "height": 40,
+    "width": 1240,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Fontes: CCEE, Dados Abertos, PLD horário (CC-BY 4.0); Open-Meteo.com, clima histórico (CC-BY 4.0); dados operacionais fictícios da Campo Real Energia."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,70 @@
+table fato_impacto
+	lineageTag: 6e180b45-b9a0-44ae-bf9f-5f2ac4a7da01
+
+	column id_execucao
+		dataType: int64
+		lineageTag: ae55f653-7339-4103-9f5c-40fcab2c0cd8
+		summarizeBy: none
+		sourceColumn: id_execucao
+
+	column indicador
+		dataType: string
+		lineageTag: 68717c29-84c6-4ba1-ace7-533ffaabe2d1
+		summarizeBy: none
+		sourceColumn: indicador
+
+	column recorte
+		dataType: string
+		lineageTag: 1641f8a4-a12b-45bb-a66b-4bee40bace1c
+		summarizeBy: none
+		sourceColumn: recorte
+
+	column antes
+		dataType: double
+		lineageTag: 852fbfc9-066e-487c-b0bf-638932c27194
+		summarizeBy: sum
+		sourceColumn: antes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column depois
+		dataType: double
+		lineageTag: 3f4d9dbc-3acc-49bb-8453-94e290db5722
+		summarizeBy: sum
+		sourceColumn: depois
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column diferenca
+		dataType: double
+		lineageTag: dda4d58f-f934-4969-8082-577a1d0deb10
+		summarizeBy: sum
+		sourceColumn: diferenca
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column variacao_pct
+		dataType: double
+		lineageTag: 0200adf5-5b63-4809-877b-5e36014869f3
+		summarizeBy: sum
+		sourceColumn: variacao_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fato_impacto = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="fato_impacto"]}[Data]
+				in
+					Tabela
+

@@ -1,0 +1,94 @@
+table fato_parada_hora
+	lineageTag: 3de7446b-ebdd-4b4b-97ba-f50456e03cae
+
+	column sk_tempo
+		dataType: int64
+		isHidden
+		lineageTag: c93a22a8-5ea5-4a4e-baa5-2f35dbf45373
+		summarizeBy: none
+		sourceColumn: sk_tempo
+
+	column sk_usina
+		dataType: int64
+		isHidden
+		lineageTag: 8dcdcd11-e9e6-4c09-b3c8-8efd5769db1c
+		summarizeBy: none
+		sourceColumn: sk_usina
+
+	column sk_fonte
+		dataType: int64
+		isHidden
+		lineageTag: 2afe4f7a-1488-453e-8ba9-58bf1984fa2a
+		summarizeBy: none
+		sourceColumn: sk_fonte
+
+	column sk_submercado
+		dataType: int64
+		isHidden
+		lineageTag: c3204060-412d-4296-8d07-0fbdb2a4c3e0
+		summarizeBy: none
+		sourceColumn: sk_submercado
+
+	column id_parada
+		dataType: int64
+		lineageTag: fcf32ef6-2fe3-4644-830e-9d4ec1b9515c
+		summarizeBy: none
+		sourceColumn: id_parada
+
+	column tipo_parada
+		dataType: string
+		lineageTag: 0ec57205-8491-4946-8062-63492da39839
+		summarizeBy: none
+		sourceColumn: tipo_parada
+
+	column motivo
+		dataType: string
+		lineageTag: 3d38e382-a269-4575-a872-6cbf4b983b6b
+		summarizeBy: none
+		sourceColumn: motivo
+
+	column energia_esperada_mwh
+		dataType: double
+		lineageTag: df8dd0b8-9109-400f-9e24-8696c045efd0
+		summarizeBy: sum
+		sourceColumn: energia_esperada_mwh
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pld
+		dataType: double
+		lineageTag: f5532a4b-e2c5-49d8-bb8f-2d8627abb1da
+		summarizeBy: sum
+		sourceColumn: pld
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column receita_perdida_rs
+		dataType: double
+		lineageTag: 0063e9f4-50fe-4343-92e5-ee8a758bd8ae
+		summarizeBy: sum
+		sourceColumn: receita_perdida_rs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column metodo_estimativa
+		dataType: string
+		lineageTag: a8447cce-ff84-4e4e-acbe-065e2a7a77dc
+		summarizeBy: none
+		sourceColumn: metodo_estimativa
+
+	partition fato_parada_hora = m
+		mode: import
+		source =
+				let
+					Source = PostgreSQL.Database(ServidorPG, BancoPG),
+					Tabela = Source{[Schema="dw",Item="fato_parada_hora"]}[Data]
+				in
+					Tabela
+

@@ -1,0 +1,108 @@
+table _Medidas
+	lineageTag: dd8ec7fc-c533-4745-9e25-13d8edd11c89
+
+	measure 'Geração MWh' = SUM ( fato_geracao[energia_mwh] )
+		formatString: #,0
+		lineageTag: 99f83ae0-8e54-495d-9b02-be79293958cc
+
+	measure 'Potência-hora MWh' = SUM ( fato_geracao[potencia_mw] )
+		formatString: #,0
+		lineageTag: 1a6ea782-4855-4e37-892e-c317f21054dd
+
+	measure 'Fator de capacidade' = DIVIDE ( [Geração MWh], [Potência-hora MWh] )
+		formatString: 0.0%
+		lineageTag: cd4facc4-e19c-4edf-be65-08060bf9ae7e
+
+	measure 'Receita PLD' = SUM ( fato_geracao[receita_pld] )
+		formatString: "R$" #,0
+		lineageTag: c04d75df-b17e-4ebd-be44-826f7aa8a962
+
+	measure 'Preço capturado' = DIVIDE ( [Receita PLD], [Geração MWh] )
+		formatString: "R$" #,0.00
+		lineageTag: cf66ad43-543e-420f-85b0-6fef67880bcf
+
+	measure 'PLD médio' = AVERAGE ( fato_pld[pld] )
+		formatString: "R$" #,0.00
+		lineageTag: 1a133760-d438-4cd7-8daf-383ee357945c
+
+	measure 'PLD médio de referência' = DIVIDE ( SUMX ( VALUES ( dim_submercado[sk_submercado] ), [Geração MWh] * CALCULATE ( AVERAGE ( fato_pld[pld] ), REMOVEFILTERS ( dim_usina ), REMOVEFILTERS ( dim_fonte ) ) ), [Geração MWh] )
+		formatString: "R$" #,0.00
+		lineageTag: dba33430-799e-4d07-97f0-920cc3a94833
+
+	measure 'Razão de captura' = DIVIDE ( [Preço capturado], [PLD médio de referência] )
+		formatString: 0.00
+		lineageTag: 58ab3e15-d1e1-4d34-a41e-869de9d3d9ca
+
+	measure 'Horas indisponíveis' = COUNTROWS ( fato_parada_hora )
+		formatString: #,0
+		lineageTag: 04212ed3-d595-457e-ae3d-131f0b54e100
+
+	measure 'Energia não gerada MWh' = SUM ( fato_parada_hora[energia_esperada_mwh] )
+		formatString: #,0
+		lineageTag: 60479950-9c98-4186-b912-8c3f4d00f71c
+
+	measure 'Receita não realizada' = SUM ( fato_parada_hora[receita_perdida_rs] )
+		formatString: "R$" #,0
+		lineageTag: f1ca7566-914f-457f-aa99-2516e514cdc5
+
+	measure 'Horas sem estimativa' = CALCULATE ( COUNTROWS ( fato_parada_hora ), ISBLANK ( fato_parada_hora[energia_esperada_mwh] ) )
+		formatString: #,0
+		lineageTag: 53be58fc-4db8-4df3-98c3-90af6d5e37d5
+
+	measure 'Radiação média' = AVERAGE ( fato_geracao[radiacao_wm2] )
+		formatString: #,0
+		lineageTag: ef095e77-4c1a-46d2-9af3-219c9f5be770
+
+	measure 'Vento 100 m médio' = AVERAGE ( fato_geracao[vento_100m_ms] )
+		formatString: #,0.0
+		lineageTag: e5099bc7-961c-4a57-84c2-c1aa6064f61d
+
+	measure 'Correlação geração x radiação' = VAR T = FILTER ( CALCULATETABLE ( fato_geracao, dim_fonte[descricao] = "Solar fotovoltaica" ), NOT ISBLANK ( fato_geracao[radiacao_wm2] ) && NOT ISBLANK ( fato_geracao[energia_mwh] ) ) VAR mx = AVERAGEX ( T, fato_geracao[radiacao_wm2] ) VAR my = AVERAGEX ( T, fato_geracao[energia_mwh] ) VAR cov = SUMX ( T, ( fato_geracao[radiacao_wm2] - mx ) * ( fato_geracao[energia_mwh] - my ) ) VAR sx = SQRT ( SUMX ( T, ( fato_geracao[radiacao_wm2] - mx ) ^ 2 ) ) VAR sy = SQRT ( SUMX ( T, ( fato_geracao[energia_mwh] - my ) ^ 2 ) ) RETURN DIVIDE ( cov, sx * sy )
+		formatString: 0.00
+		lineageTag: 5ee6c312-6c5f-4381-ab23-fa54386d5cd2
+
+	measure 'Correlação geração x vento' = VAR T = FILTER ( CALCULATETABLE ( fato_geracao, dim_fonte[descricao] = "Eólica" ), NOT ISBLANK ( fato_geracao[vento_100m_ms] ) && NOT ISBLANK ( fato_geracao[energia_mwh] ) ) VAR mx = AVERAGEX ( T, fato_geracao[vento_100m_ms] ) VAR my = AVERAGEX ( T, fato_geracao[energia_mwh] ) VAR cov = SUMX ( T, ( fato_geracao[vento_100m_ms] - mx ) * ( fato_geracao[energia_mwh] - my ) ) VAR sx = SQRT ( SUMX ( T, ( fato_geracao[vento_100m_ms] - mx ) ^ 2 ) ) VAR sy = SQRT ( SUMX ( T, ( fato_geracao[energia_mwh] - my ) ^ 2 ) ) RETURN DIVIDE ( cov, sx * sy )
+		formatString: 0.00
+		lineageTag: b76991fd-986b-4933-85e0-bac6ff95668f
+
+	measure 'Índice de qualidade' = CALCULATE ( AVERAGE ( fato_qualidade[pct_conformidade] ), fato_qualidade[fase] = "origem" ) / 100
+		formatString: 0.0%
+		lineageTag: c98cbe24-beda-4802-b69f-a248c1ecb573
+
+	measure 'Índice de qualidade após limpeza' = CALCULATE ( AVERAGE ( fato_qualidade[pct_conformidade] ), fato_qualidade[fase] = "stg" ) / 100
+		formatString: 0.0%
+		lineageTag: 1de2c787-9b09-423f-bbee-e16624b65377
+
+	measure 'Registros com falha' = CALCULATE ( SUM ( fato_qualidade[falhas] ), fato_qualidade[fase] = "origem" )
+		formatString: #,0
+		lineageTag: 774ce6bf-ffb2-42a4-ac8a-545dba0d1c07
+
+	measure 'Receita antes da limpeza' = CALCULATE ( SUM ( fato_impacto[antes] ), fato_impacto[indicador] = "Receita valorada ao PLD (R$)", fato_impacto[recorte] = "Total" )
+		formatString: "R$" #,0
+		lineageTag: 510fda84-bc37-4919-9677-9f413641ab9f
+
+	measure 'Receita depois da limpeza' = CALCULATE ( SUM ( fato_impacto[depois] ), fato_impacto[indicador] = "Receita valorada ao PLD (R$)", fato_impacto[recorte] = "Total" )
+		formatString: "R$" #,0
+		lineageTag: f07df3b9-bd03-4b4e-b3e1-468e99b49d0b
+
+	measure 'Diferença da limpeza' = [Receita depois da limpeza] - [Receita antes da limpeza]
+		formatString: "R$" #,0
+		lineageTag: 89c09364-d96b-4e40-b2f5-4aa0e3ba4b03
+
+	column Coluna
+		dataType: int64
+		isHidden
+		lineageTag: c863fbd1-e71c-487c-95f4-1ecdba9d10cf
+		summarizeBy: none
+		sourceColumn: Coluna
+
+	partition _Medidas = m
+		mode: import
+		source =
+				let
+					Source = #table(type table [Coluna = Int64.Type], {{1}})
+				in
+					Source
+
+	annotation PBI_ResultType = Table
+

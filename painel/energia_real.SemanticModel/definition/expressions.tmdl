@@ -1,0 +1,12 @@
+expression ServidorPG = "ep-shy-truth-acqtz636-pooler.sa-east-1.aws.neon.tech" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 935d59df-77e3-42d2-bab3-3ab3f157841a
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navegação
+
+expression BancoPG = "neondb" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 33ef4ccb-5824-4e9a-b842-987a578e3a60
+
+	annotation PBI_ResultType = Text
+
