@@ -25,6 +25,47 @@ def brl(v) -> str:
     return f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
+def gerar_catalogo() -> None:
+    """Gera docs/catalogo_regras.md: todas as regras de qualidade, uma a uma, por dimensão (última execução)."""
+    common.carregar_env()
+    with common.conectar() as conn:
+        ex = conn.execute("SELECT MAX(id_execucao) FROM qualidade.metrica").fetchone()[0]
+        met = ler_df(conn, "SELECT tabela, regra, dimensao, descricao, avaliados, falhas FROM qualidade.metrica "
+                           "WHERE id_execucao = %s AND fase = 'origem'", (ex,))
+    met["dimensao"] = pd.Categorical(met["dimensao"], categories=R.DIMENSOES, ordered=True)
+    met = met.sort_values(["dimensao", "tabela", "regra"]).reset_index(drop=True)
+    met["n"] = met.index + 1
+    resumo = met.groupby("dimensao", observed=True).size().rename("regras").reset_index()
+
+    def esc(v) -> str:
+        return str(v).replace("|", "\\|")
+
+    secoes = ""
+    for dim, g in met.groupby("dimensao", observed=True):
+        linhas = "".join(f"| {r.n} | `{r.tabela}` | `{r.regra}` | {esc(r.descricao)} | {r.avaliados} | {r.falhas} |\n"
+                         for r in g.itertuples(index=False))
+        secoes += (f"## {dim} ({len(g)} regras)\n\n| # | tabela | regra | o que verifica | avaliados | falhas na origem |\n"
+                   f"|---|---|---|---|---|---|\n{linhas}\n")
+    texto = f"""# Catálogo de regras de qualidade
+
+São **{len(met)} regras**, avaliadas na execução {ex} (`python qualidade/relatorio.py` regenera este arquivo).
+Cada regra tem um nome único por tabela, uma dimensão e uma descrição, gravados na tabela `qualidade.metrica`.
+
+As regras são aplicadas por funções reutilizáveis de [`qualidade/regras.py`](../qualidade/regras.py) a cada tabela, em
+`regras_medicao`, `regras_cadastro` e `regras_externas`, em [`qualidade/executar.py`](../qualidade/executar.py).
+As decisões sobre cada problema encontrado (corrigir, descartar, quarentena ou sinalizar) estão em
+[relatorio_qualidade.md](relatorio_qualidade.md).
+
+## Resumo por dimensão
+
+{tabela_md(resumo)}
+{secoes}"""
+    destino = RAIZ / "docs" / "catalogo_regras.md"
+    destino.parent.mkdir(exist_ok=True)
+    destino.write_text(texto.rstrip() + "\n", encoding="utf-8")
+    print(f"gerado: {destino}")
+
+
 def main() -> int:
     common.carregar_env()
     with common.conectar() as conn:
@@ -97,6 +138,7 @@ Nas demais fontes, a limpeza muda a receita em menos de 0,2%.
     destino.parent.mkdir(exist_ok=True)
     destino.write_text(texto, encoding="utf-8")
     print(f"gerado: {destino}")
+    gerar_catalogo()
     return 0
 
 

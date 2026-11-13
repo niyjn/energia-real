@@ -11,10 +11,10 @@ extração de fontes públicas, qualidade de dados, star schema no PostgreSQL e 
 |---|---|
 | `origem/` | Script do banco operacional fictício (`campo_real_energia_postgres.sql`) |
 | `extração/` | Etapa 1: extratores Python do PLD (CCEE) e do clima (Open-Meteo), com raw, tratada e log |
-| `qualidade/` | Etapa 2: profiling, regras por dimensão, limpeza com decisões, impacto antes x depois |
+| `qualidade/` | Etapa 2: profiling, 48 regras em 7 dimensões (listadas em [`docs/catalogo_regras.md`](docs/catalogo_regras.md)), limpeza com decisões, impacto antes x depois |
 | `dw/` | Etapa 3: DDL, carga (SCD2) e views do star schema |
 | `painel/` | Etapa 4: medidas DAX e roteiro de montagem do painel |
-| `docs/` | Documento de modelagem e relatório de qualidade |
+| `docs/` | Documento de modelagem, relatório de qualidade e catálogo das 48 regras de qualidade |
 
 ## Requisitos
 
@@ -50,7 +50,7 @@ também o Chromium do Playwright (`playwright install chromium`) ou tenha Chrome
 | 1 | `python extração/ccee_pld.py` | PLD horário 2025 e 2026 pela API CKAN | `raw.ccee_pld_raw`, `tratada.pld_horario` |
 | 2 | `python extração/open_meteo.py` | Clima horário nas coordenadas das 9 usinas | `raw.open_meteo_raw`, `tratada.clima_horario` |
 | 3 | `python qualidade/executar.py` | Profiling, regras, limpeza, quarentena, impacto | `qualidade.*`, `stg.*` |
-| 4 | `python qualidade/relatorio.py` | Gera o relatório de qualidade | `docs/relatorio_qualidade.md` |
+| 4 | `python qualidade/relatorio.py` | Gera o relatório de qualidade e o catálogo das 48 regras | `docs/relatorio_qualidade.md`, `docs/catalogo_regras.md` |
 | 5 | `python dw/carregar_dw.py` | Cria e carrega o star schema e confere os grãos | `dw.*` |
 | 6 | Power BI: seguir `painel/roteiro_painel.md` | Painel lendo só do `dw` | `.pbix` |
 
@@ -69,7 +69,8 @@ Para recriar o DW do zero: `python dw/carregar_dw.py --recriar`.
 | Pior captura | Solar (razão 0,77: gera ao meio-dia, quando o PLD é baixo) |
 | Efeito da limpeza na receita | −R$ 165,7 milhões (−20,6%), quase todo de um dia digitado em kWh |
 
-Detalhes: [docs/relatorio_qualidade.md](docs/relatorio_qualidade.md) e [docs/modelagem.md](docs/modelagem.md).
+Detalhes: [docs/relatorio_qualidade.md](docs/relatorio_qualidade.md), [docs/catalogo_regras.md](docs/catalogo_regras.md)
+(as 48 regras de qualidade, uma a uma, por dimensão) e [docs/modelagem.md](docs/modelagem.md).
 
 ## Observação sobre a CCEE
 
